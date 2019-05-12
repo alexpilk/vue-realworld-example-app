@@ -8,7 +8,7 @@
       <RwvArticlePreview
         v-for="(article, index) in articles"
         :article="article"
-        :key="article.title + index"
+        :key="article.name + index"
       />
       <VPagination :pages="pages" :currentPage.sync="currentPage" />
     </div>

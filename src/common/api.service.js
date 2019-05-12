@@ -57,21 +57,21 @@ export const TagsService = {
 
 export const ArticlesService = {
   query(type, params) {
-    return ApiService.query("articles" + (type === "feed" ? "/feed" : ""), {
+    return ApiService.query("projects" + (type === "feed" ? "/feed" : ""), {
       params: params
     });
   },
   get(slug) {
-    return ApiService.get("articles", slug);
+    return ApiService.get("projects", slug);
   },
   create(params) {
-    return ApiService.post("articles", { article: params });
+    return ApiService.post("projects", { article: params });
   },
   update(slug, params) {
-    return ApiService.update("articles", slug, { article: params });
+    return ApiService.update("projects", slug, { article: params });
   },
   destroy(slug) {
-    return ApiService.delete(`articles/${slug}`);
+    return ApiService.delete(`projects/${slug}`);
   }
 };
 

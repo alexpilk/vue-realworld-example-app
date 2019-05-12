@@ -1,5 +1,5 @@
-import { TagsService, ArticlesService } from "@/common/api.service";
-import { FETCH_ARTICLES, FETCH_TAGS } from "./actions.type";
+import { ArticlesService } from "@/common/api.service";
+import { FETCH_ARTICLES } from "./actions.type";
 import {
   FETCH_START,
   FETCH_END,
@@ -34,21 +34,22 @@ const actions = {
     commit(FETCH_START);
     return ArticlesService.query(params.type, params.filters)
       .then(({ data }) => {
-        commit(FETCH_END, data);
-      })
-      .catch(error => {
-        throw new Error(error);
-      });
-  },
-  [FETCH_TAGS]({ commit }) {
-    return TagsService.get()
-      .then(({ data }) => {
-        commit(SET_TAGS, data.tags);
+        console.log();
+        commit(FETCH_END, { articles: data });
       })
       .catch(error => {
         throw new Error(error);
       });
   }
+  // [FETCH_TAGS]({ commit }) {
+  //   return TagsService.get()
+  //     .then(({ data }) => {
+  //       commit(SET_TAGS, data.tags);
+  //     })
+  //     .catch(error => {
+  //       throw new Error(error);
+  //     });
+  // }
 };
 
 /* eslint no-param-reassign: ["error", { "props": false }] */
@@ -56,9 +57,10 @@ const mutations = {
   [FETCH_START](state) {
     state.isLoading = true;
   },
-  [FETCH_END](state, { articles, articlesCount }) {
+  [FETCH_END](state, { articles }) {
+    console.log(articles);
     state.articles = articles;
-    state.articlesCount = articlesCount;
+    state.articlesCount = articles.length;
     state.isLoading = false;
   },
   [SET_TAGS](state, tags) {
