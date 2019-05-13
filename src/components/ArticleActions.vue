@@ -16,10 +16,10 @@
   <span v-else>
     <button class="btn btn-sm btn-outline-secondary" @click="toggleFollow">
       <i class="ion-plus-round"></i> <span>&nbsp;</span>
-      <span
-        >{{ profile.following ? "Unfollow" : "Follow" }}
-        {{ article.author.username }}</span
-      >
+      <!-- <span -->
+      <!-- >{{ profile.following ? "Unfollow" : "Follow" }} -->
+      <!-- {{ article.author.username }}</span -->
+      <!-- > -->
     </button>
     <span>&nbsp;&nbsp;</span>
     <button

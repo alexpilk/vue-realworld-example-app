@@ -5,7 +5,7 @@
       <h1 v-text="article.name" />
       <p v-text="article.description" />
       <span>Read more...</span>
-      <!-- <TagList :tags="article.tagList" /> -->
+      <!-- <TagList :tags="article.tasks" /> -->
     </router-link>
   </div>
 </template>
@@ -28,7 +28,7 @@ export default {
       return {
         name: "article",
         params: {
-          slug: this.article.slug
+          slug: this.article.id
         }
       };
     }

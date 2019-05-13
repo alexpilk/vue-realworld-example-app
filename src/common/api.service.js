@@ -61,8 +61,8 @@ export const ArticlesService = {
       params: params
     });
   },
-  get(slug) {
-    return ApiService.get("projects", slug);
+  get(id) {
+    return ApiService.get("projects/id", id);
   },
   create(params) {
     return ApiService.post("projects", { article: params });

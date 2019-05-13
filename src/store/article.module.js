@@ -33,7 +33,7 @@ const initialState = {
     title: "",
     description: "",
     body: "",
-    tagList: []
+    tasks: []
   },
   comments: []
 };
@@ -47,7 +47,7 @@ export const actions = {
       return context.commit(SET_ARTICLE, prevArticle);
     }
     const { data } = await ArticlesService.get(articleSlug);
-    context.commit(SET_ARTICLE, data.article);
+    context.commit(SET_ARTICLE, data);
     return data;
   },
   async [FETCH_COMMENTS](context, articleSlug) {
@@ -103,10 +103,10 @@ export const mutations = {
     state.comments = comments;
   },
   [TAG_ADD](state, tag) {
-    state.article.tagList = state.article.tagList.concat([tag]);
+    state.article.tasks = state.article.tasks.concat([tag]);
   },
   [TAG_REMOVE](state, tag) {
-    state.article.tagList = state.article.tagList.filter(t => t !== tag);
+    state.article.tasks = state.article.tasks.filter(t => t !== tag);
   },
   [RESET_STATE]() {
     for (let f in state) {
