@@ -2,20 +2,30 @@
   <div class="article-page">
     <div class="banner">
       <div class="container">
-        <h1>{{ article.title }}</h1>
+        <h1>{{ article.name }}</h1>
         <RwvArticleMeta :article="article" :actions="true"></RwvArticleMeta>
       </div>
     </div>
     <div class="container page">
       <div class="row article-content">
         <div class="col-xs-12">
-          <div v-html="parseMarkdown(article.body)"></div>
-          <ul class="tag-list">
-            <li v-for="(tag, index) of article.tagList" :key="tag + index">
-              <RwvTag
-                :name="tag"
-                className="tag-default tag-pill tag-outline"
-              ></RwvTag>
+          <ul>
+            <li v-for="(user, index) of article.users" :key="tag + index">
+              {{ user.name }}
+              <!-- <RwvTag -->
+              <!-- :name="tag" -->
+              <!-- className="tag-default tag-pill tag-outline" -->
+              <!-- &gt;</RwvTag> -->
+            </li>
+          </ul>
+          <!-- <div v-html="parseMarkdown(article.body)"></div> -->
+          <ul>
+            <li v-for="(tag, index) of article.tasks" :key="tag + index">
+              {{ tag.description }}
+              <!-- <RwvTag -->
+              <!-- :name="tag" -->
+              <!-- className="tag-default tag-pill tag-outline" -->
+              <!-- &gt;</RwvTag> -->
             </li>
           </ul>
         </div>
@@ -38,13 +48,13 @@
             <router-link :to="{ name: 'register' }">sign up</router-link>
             to add comments on this article.
           </p>
-          <RwvComment
-            v-for="(comment, index) in comments"
-            :slug="slug"
-            :comment="comment"
-            :key="index"
-          >
-          </RwvComment>
+          <!-- <RwvComment -->
+          <!-- v-for="(comment, index) in comments" -->
+          <!-- :slug="slug" -->
+          <!-- :comment="comment" -->
+          <!-- :key="index" -->
+          <!-- &gt; -->
+          <!-- </RwvComment> -->
         </div>
       </div>
     </div>
@@ -59,7 +69,11 @@ import RwvArticleMeta from "@/components/ArticleMeta";
 import RwvComment from "@/components/Comment";
 import RwvCommentEditor from "@/components/CommentEditor";
 import RwvTag from "@/components/VTag";
-import { FETCH_ARTICLE, FETCH_COMMENTS } from "@/store/actions.type";
+import {
+  FETCH_ARTICLE,
+  FETCH_ARTICLE_USERS,
+  FETCH_COMMENTS
+} from "@/store/actions.type";
 
 export default {
   name: "rwv-article",
@@ -78,7 +92,9 @@ export default {
   beforeRouteEnter(to, from, next) {
     Promise.all([
       store.dispatch(FETCH_ARTICLE, to.params.slug),
-      store.dispatch(FETCH_COMMENTS, to.params.slug)
+      store.dispatch(FETCH_ARTICLE_USERS, to.params.slug),
+      () => FETCH_COMMENTS
+      // store.dispatch(FETCH_COMMENTS, to.params.slug)
     ]).then(() => {
       next();
     });

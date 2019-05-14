@@ -1,11 +1,13 @@
 import Vue from "vue";
 import {
   ArticlesService,
+  ArticlesUserService,
   CommentsService,
   FavoriteService
 } from "@/common/api.service";
 import {
   FETCH_ARTICLE,
+  FETCH_ARTICLE_USERS,
   FETCH_COMMENTS,
   COMMENT_CREATE,
   COMMENT_DESTROY,
@@ -21,6 +23,7 @@ import {
 import {
   RESET_STATE,
   SET_ARTICLE,
+  SET_ARTICLE_USERS,
   SET_COMMENTS,
   TAG_ADD,
   TAG_REMOVE,
@@ -41,6 +44,12 @@ const initialState = {
 export const state = { ...initialState };
 
 export const actions = {
+  async [FETCH_ARTICLE_USERS](context, articleSlug) {
+    // avoid extronuous network call if article exists
+    const { data } = await ArticlesUserService.get(articleSlug);
+    context.commit(SET_ARTICLE_USERS, data);
+    return data;
+  },
   async [FETCH_ARTICLE](context, articleSlug, prevArticle) {
     // avoid extronuous network call if article exists
     if (prevArticle !== undefined) {
@@ -96,6 +105,9 @@ export const actions = {
 
 /* eslint no-param-reassign: ["error", { "props": false }] */
 export const mutations = {
+  [SET_ARTICLE_USERS](state, users) {
+    state.article.users = users;
+  },
   [SET_ARTICLE](state, article) {
     state.article = article;
   },

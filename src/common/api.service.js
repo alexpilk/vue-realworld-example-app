@@ -75,6 +75,21 @@ export const ArticlesService = {
   }
 };
 
+export const ArticlesUserService = {
+  get(id) {
+    return ApiService.get(`projects/id/${id}/users`);
+  },
+  create(params) {
+    return ApiService.post("projects", { article: params });
+  },
+  update(slug, params) {
+    return ApiService.update("projects", slug, { article: params });
+  },
+  destroy(slug) {
+    return ApiService.delete(`projects/${slug}`);
+  }
+};
+
 export const CommentsService = {
   get(slug) {
     if (typeof slug !== "string") {
